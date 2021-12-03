@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.png" type="">
+  <title>Ресторант Приятели</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://kit.fontawesome.com/f5c03f5a19.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+  <script src="script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+
+  <!--navigation-->
+  <section id="nav-bar">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="images/logo90x60.png"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <div><i class="far fa-caret-square-down" style="color: grey; font-size: 2.2rem;"></i></div>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Начало</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link menu-short" href="#menu-list"><i class="fas fa-utensils"></i> МЕНЮ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#footer-section">За нас</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="tel:0876442740"><i class="fas fa-phone"></i> 0876 442 740</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="tel:0878222317"><i class="fas fa-phone"></i> 0878 222 317</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="mailto:priateli@abv.bg"><i class="fas fa-at"> </i> priateli@abv.bg</a>
+            </li>
+          </ul>
+        </div>
+        <!-- <a class="cart-button" href="cart.html"><i class="fas fa-shopping-cart"></i> Количка</a> -->
+        </button>
+      </div>
+  
+      
+    </nav>
+  </section>
+
+  <section>
+    <div class="slider">
+      <img class="mySlides" src="images/background.png" style="width:100%">
+      <img class="mySlides" src="images/background2.png" style="width:100%">
+    </div>
+  </section>
+
+  <script>
+    let myIndex = 0;
+    carousel();
+
+    function carousel() {
+      let i;
+      let x = document.getElementsByClassName("mySlides");
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      myIndex++;
+      if (myIndex > x.length) { myIndex = 1 }
+      x[myIndex - 1].style.display = "block";
+      setTimeout(carousel, 3000); // Change image every 2 seconds
+    }
+  </script>
+
+
+  <!----------MENU---------->
+
+  <section id="menu-list" class="section-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center marb-35">
+          <h1 class="header-h">МЕНЮ</h1>
+        </div>
+
+        <div class="col-md-12 text-center" id="menu-filters">
+          <ul>
+            <li class="filter" data-filter="menu-restaurant">Покажи всички</li>
+            <li class="filter" data-filter="salati">Салати</li>
+            <li class="filter" data-filter="kartofeni-vkusotiiki">Картофени вкусотийки</li>
+            <li class="filter" data-filter="bezmesni">Безмесни</li>
+            <li class="filter" data-filter="pileshka-skara">Пилешка скара</li>
+            <li class="filter" data-filter="svinska-skara">Свинска скара</li>
+            <li class="filter" data-filter="pileshki-mezeta">Пилешки мезета</li>
+            <li class="filter" data-filter="svinski-mezeta">Свински мезета</li>
+            <li class="filter" data-filter="pileshki-qstiq">Пилешки ястия</li>
+            <li class="filter" data-filter="svinski-qstiq">Свински ястия</li>
+            <li class="filter" data-filter="sachove">Сачове</li>
+            <li class="filter" data-filter="spageti">Спагети</li>
+            <li class="filter" data-filter="rizoto">Ризото</li>
+            <li class="filter" data-filter="garnituri">Гарнитури и сосчета</li>
+            <li class="filter" data-filter="pitkit">Питки и пърленки</li>
+            <li class="filter" data-filter="mezeta">Сухи мезета</li>
+            <li class="filter" data-filter="deserti">Десерти</li>
+          </ul>
+        </div>
+
+        <div class="row row-cols-sm-1 row-cols-md-2 menu-wrapper">
+
+
+          <!------НАЧАЛО НА МЕНЮТО------->
+
+          <div class="salati menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Шопска салата (400 гр.)</a>
+              <span class="menu-price">4.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/домати, краставици, печен пипер, лук, сирене/</span>
+          </div>
+
+          <div class="salati menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Овчарска салата</a>
+              <span class="menu-price">5.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/домати, краставици, печен пипер, лук, гъби, шунка, кашкавал, сирене/</span>
+          </div>
+
+          <div class="salati menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Зелена салата с яйце</a>
+              <span class="menu-price">5.50 лв.</span>
+            </span>
+            <span class="menu-subtitle">/зелена салата, краставици, репички, пресен лук, варено яйце/</span>
+          </div>
+
+
+          <div class="salati menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Салата на Шефа</a>
+              <span class="menu-price">6.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/домати, катък, печен пипер, луканка, билково песто/</span>
+          </div>
+
+          <div class="salati menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Салата "Приятели"</a>
+              <span class="menu-price">7.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/айсберг, краставици, чери домати, сирене "Фета", крутони, орехи, пил. филе на
+              скара/</span>
+          </div>
+
+          <div class="salati menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Салата "Цезар"</a>
+              <span class="menu-price">7.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/айсберг, пил. филе на скара, бекон, крутони, пармезан, дресинг/</span>
+          </div>
+
+          <div class="salati menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Салата Капрезе</a>
+              <span class="menu-price">6.50 лв.</span>
+            </span>
+            <span class="menu-subtitle">/белени домати, сирене Моцарела, билково песто/</span>
+          </div>
+
+          <div class="salati menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Салата зеле с моркови</a>
+              <span class="menu-price">3.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="salati menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Снежанка с орехи</a>
+              <span class="menu-price">5.50 лв.</span>
+            </span>
+            <span class="menu-subtitle">/цедено кисело мляко, краставици, орехи/</span>
+          </div>
+
+          <div class="salati menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Картофена салата с червен лук</a>
+              <span class="menu-price">3.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="salati menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Катък</a>
+              <span class="menu-price">5.50 лв.</span>
+            </span>
+            <span class="menu-subtitle">/цедено кисело мляко, сирене, чесън, печен пипер/</span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ САЛАТИ-->
+
+
+          <div class="kartofeni-vkusotiiki menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Пържени картофи</a>
+              <span class="menu-price">3.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="kartofeni-vkusotiiki menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Пържени картофи със сирене</a>
+              <span class="menu-price">3.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="kartofeni-vkusotiiki menu-restaurant">
+            <span class="clearfix">
+              <a href="" class="menu-title">Домашни пържени картофи</a>
+              <span class="menu-price">4.20 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="kartofeni-vkusotiiki menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Домашни пържени картофи със сирене</a>
+              <span class="menu-price">4.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="kartofeni-vkusotiiki menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пикантни селски картофи с чесново сосче</a>
+              <span class="menu-price">3.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="kartofeni-vkusotiiki menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Картофен чипс</a>
+              <span class="menu-price">4.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="kartofeni-vkusotiiki menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Картофи соте</a>
+              <span class="menu-price">4.50 лв.</span>
+            </span>
+            <span class="menu-subtitle">/картофи, чесън, копър/</span>
+          </div>
+          <!-- КРАЙ НА МЕНЮ КАРТОФЕНИ ВКУСОТИЙКИ-->
+
+          <div class="bezmesni menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Хрупкави топени сиренца със сладко от боровинки</a>
+              <span class="menu-price">6.20 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="bezmesni menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Сиренца пане</a>
+              <span class="menu-price">5.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="bezmesni menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Кашкавалчета пане</a>
+              <span class="menu-price">6.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="bezmesni menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Омлет със сирене</a>
+              <span class="menu-price">4.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="bezmesni menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Омлет с шунка</a>
+              <span class="menu-price">4.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="bezmesni menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Миш-маш със сирене</a>
+              <span class="menu-price">4.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+          <!-- КРАЙ НА МЕНЮ БЕЗМЕСНИ-->
+
+          <div class="pileshka-skara menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пилешко шишче</a>
+              <span class="menu-price">2.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pileshka-skara menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пилешка пържола от филе</a>
+              <span class="menu-price">7.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pileshka-skara menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пилешка пържола от бутче</a>
+              <span class="menu-price">7.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pileshka-skara menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пилешка мешана скара</a>
+              <span class="menu-price">13.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/пържола, шишче, крилце, кебапче, кютфе/</span>
+          </div>
+
+          <div class="pileshka-skara menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Крилца на скара</a>
+              <span class="menu-price">6.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pileshka-skara menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Кебапче / Кюфте</a>
+              <span class="menu-price">1.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ ПИЛЕШКА СКАРА-->
+
+          <div class="svinska-skara menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свинско шишче</a>
+              <span class="menu-price">2.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="svinska-skara menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Кебапче / Кюфте</a>
+              <span class="menu-price">1.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="svinska-skara menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свински бекончета на скара</a>
+              <span class="menu-price">7.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="svinska-skara menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свински ребърца</a>
+              <span class="menu-price">13.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="svinska-skara menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свинска мешана скара</a>
+              <span class="menu-price">13.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/пържола, шишче, кюфте, кебапче/</span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ СВИНСКА СКАРА-->
+
+          <div class="pileshki-mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пилешки сърца с лук</a>
+              <span class="menu-price">4.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pileshki-mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Хрупкави пилешки филенца с корнфлейкс и чесново сосче</a>
+              <span class="menu-price">6.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pileshki-mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Панирани пилешки хапки с чесново сосче</a>
+              <span class="menu-price">6.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pileshki-mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пикантни крилца</a>
+              <span class="menu-price">6.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pileshki-mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пилешки дробчета с лук</a>
+              <span class="menu-price">4.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pileshki-mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пилешки флейки в соев сос</a>
+              <span class="menu-price">7.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ ПИЛЕШКИ МЕЗЕТА-->
+
+          <div class="svinski-mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свински дроб на тиган / скара</a>
+              <span class="menu-price">5.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="svinski-mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пресен суджук на гребен</a>
+              <span class="menu-price">7.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="svinski-mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свински език в масло</a>
+              <span class="menu-price">7.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="svinski-mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свински каренца на тиган</a>
+              <span class="menu-price">8.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ СВИНСКИ МЕЗЕТА-->
+
+          <div class="pileshki-qstiq menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пиле с бекон и сос от сирена</a>
+              <span class="menu-price">8.50 лв.</span>
+            </span>
+            <span class="menu-subtitle">/пържола от бут, бекон, сос от сирена/</span>
+          </div>
+
+          <div class="pileshki-qstiq menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пилешки филенца със зеленчуци и кашкавал</a>
+              <span class="menu-price">8.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pileshki-qstiq menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пиле с моцарела и доматена салца</a>
+              <span class="menu-price">8.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/пилешко филе, босилек, моцарела, патладжан, тиквичка/</span>
+          </div>
+
+          <div class="pileshki-qstiq menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пиле Фантазия</a>
+              <span class="menu-price">8.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/пилешко филе, гъбки, кашкавал, домат, кисели краставички/</span>
+          </div>
+
+          <div class="pileshki-qstiq menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пилешки каренца с лек сметанов сос и гъбки</a>
+              <span class="menu-price">8.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pileshki-qstiq menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пилешка кавърма</a>
+              <span class="menu-price">8.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/пилешко филе, печен пипер, гъбки, домати, лук/</span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ ПИЛЕШКИ ЯСТИЯ-->
+
+          <div class="svinski-qstiq menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свинско филе с гъбен сос</a>
+              <span class="menu-price">9.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/свинско бон филе с гъен сос върху картофено пюре/</span>
+          </div>
+
+          <div class="svinski-qstiq menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свинско филе с топено сирене, гъби и сметана</a>
+              <span class="menu-price">9.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/свинско бон филе със сос от пресни гъби, топено сирене и сметана/</span>
+          </div>
+
+          <div class="svinski-qstiq menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свински друсан кебап с лук и гъби</a>
+              <span class="menu-price">8.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="svinski-qstiq menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свинска вратна пържола с гриловани зеленчуци</a>
+              <span class="menu-price">9.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="svinski-qstiq menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свинска кавърма</a>
+              <span class="menu-price">8.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="svinski-qstiq menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свинска вратна пържола</a>
+              <span class="menu-price">7.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ СВИНСКИ ЯСТИЯ-->
+
+          <div class="sachove menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Пилешки сач</a>
+              <span class="menu-price">14.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/пилешки филенца, зеленчуци и кашкавал/</span>
+          </div>
+
+          <div class="sachove menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Свински сач</a>
+              <span class="menu-price">14.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/свински каренца, зеленчуци и кашкавал/</span>
+          </div>
+
+          <div class="sachove menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Комбиниран сач</a>
+              <span class="menu-price">16.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/пилешко филе, свински каренца, зеленчуци и кашкавал/</span>
+          </div>
+
+          <div class="sachove menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Комбиниран сач</a>
+              <span class="menu-price">10.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/зеленчуци и кашкавал/</span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ САЧОВЕ-->
+
+          <div class="spageti menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Спагети Карбонара</a>
+              <span class="menu-price">6.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/спагети, бекон, яйца, сметана, кашкавал/</span>
+          </div>
+
+          <div class="spageti menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Спагети Болонезе</a>
+              <span class="menu-price">5.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/спагети, кайма, лук, чесън, доматен сос, кашкавал/</span>
+          </div>
+
+          <div class="spageti menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Спагети с пиле</a>
+              <span class="menu-price">6.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/спагети, пилешко филе, доматен сос, кашкавал/</span>
+          </div>
+
+          <div class="spageti menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Зеленчукови спагети</a>
+              <span class="menu-price">4.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/спагети, зеленчуци, сметана, кашкавал/</span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ СПАГЕТИ-->
+
+          <div class="rizoto menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Ризото с пиле</a>
+              <span class="menu-price">6.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/ориз, пил. филе, лук, сметана, пармезан/</span>
+          </div>
+
+          <div class="rizoto menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Зеленчуково ризото</a>
+              <span class="menu-price">5.50 лв.</span>
+            </span>
+            <span class="menu-subtitle">/ориз, зеленчуци, пармезан, сметана/</span>
+          </div>
+
+          <div class="rizoto menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Ризото с печурки</a>
+              <span class="menu-price">6.50 лв.</span>
+            </span>
+            <span class="menu-subtitle">/ориз, печурки, сметана, пармезан/</span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ РИЗОТО-->
+
+          <div class="garnituri menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Студена гарнитура</a>
+              <span class="menu-price">2.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/домати, краставици, зеле с моркови/</span>
+          </div>
+
+          <div class="garnituri menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Топла гарнитура</a>
+              <span class="menu-price">2.99 лв.</span>
+            </span>
+            <span class="menu-subtitle">/ориз със зеленчуци/</span>
+          </div>
+
+          <div class="garnituri menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Картофено пюре</a>
+              <span class="menu-price">2.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="garnituri menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Задушени зеленчуци</a>
+              <span class="menu-price">3.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="garnituri menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Кетчуп, майонеза, горчица</a>
+              <span class="menu-price">0.60 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="garnituri menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Млечен / чеснов сос</a>
+              <span class="menu-price">0.80 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ ГАРНИТУРИ-->
+
+          <div class="pitkit menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Домашна пърленка</a>
+              <span class="menu-price">1.00 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pitkit menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Домашна чеснова пърленка</a>
+              <span class="menu-price">1.20 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pitkit menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Домашна пърленка със сирене и кашкавал</a>
+              <span class="menu-price">1.80 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pitkit menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Филия хляб</a>
+              <span class="menu-price">0.15 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pitkit menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Препечена филия</a>
+              <span class="menu-price">0.20 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pitkit menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Филия черен хляб</a>
+              <span class="menu-price">0.20 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="pitkit menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Филия черен хляб - препечена</a>
+              <span class="menu-price">0.25 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ ПИТКИ-->
+
+          <div class="mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Филе Елена</a>
+              <span class="menu-price">3.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Суджук</a>
+              <span class="menu-price">2.80 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Луканка</a>
+              <span class="menu-price">2.80 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Кайзер</a>
+              <span class="menu-price">3.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Шпек салам</a>
+              <span class="menu-price">1.80 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Сирене натюр</a>
+              <span class="menu-price">1.20 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="mezeta menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Кашкавал натюр</a>
+              <span class="menu-price">1.60 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ МЕЗЕТА-->
+
+          <div class="deserti menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Сладоледена торта</a>
+              <span class="menu-price">3.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="deserti menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Палачинка с шоколад / сладко / мед</a>
+              <span class="menu-price">2.50 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="deserti menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Сладолед ванилия / шоколад</a>
+              <span class="menu-price">2.99 лв.</span>
+            </span>
+            <span class="menu-subtitle"></span>
+          </div>
+
+          <div class="deserti menu-restaurant">
+            <span class="clearfix">
+              <a href="#" class="menu-title">Цедено кисело мляко</a>
+              <span class="menu-price">2.50 лв.</span>
+            </span>
+            <span class="menu-subtitle">/сладко от боровинки; мед и орехи/</span>
+          </div>
+
+          <!-- КРАЙ НА МЕНЮ ДЕСЕРТИ-->
+
+
+        </div>
+        <!--END MENU WRAPPER-->
+
+      </div>
+      <!--END ROW-->
+    </div> <!-- EMD CONTAINER-->
+    <div id="google">
+      <a href="google-link"><iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2877.475887768985!2d25.968365114887828!3d43.84596414796339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40ae6151f575502f%3A0xed8f792262b0da0b!2z0KDQtdGB0YLQvtGA0LDQvdGCICLQn9GA0LjRj9GC0LXQu9C4Ig!5e0!3m2!1sbg!2sbg!4v1636045049105!5m2!1sbg!2sbg"
+          width="80%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe></a>
+    </div>
+  </section> <!-- END SECTION-->
+
+  <script>
+    $(document).ready(function () {
+      $('.filter').click(function () {
+        let value = $(this).attr('data-filter');
+        if (value == 'menu-restaurant') {
+          $('.menu-restaurant').show('1000');
+        }
+        else {
+          $('.menu-restaurant').not('.' + value).hide('1000');
+          $('.menu-restaurant').filter('.' + value).show('1000');
+        }
+      })
+    })
+  </script>
+
+  <!-- Footer -->
+
+  <section id="footer-section">
+    <footer class="page-footer font-small teal pt-4">
+
+      <!-- Footer Text -->
+      <div class="container-fluid text-center text-md-left">
+
+        <!-- Grid row -->
+        <div class="row">
+
+          <hr class="clearfix w-100 d-md-none pb-3">
+
+          <!-- Grid column -->
+          <div class="col-md-6 mb-md-0 mb-3">
+
+            <!-- Content -->
+            <h5 id="contact" class="text-uppercase font-weight-bold white-text">Контакти</h5>
+            <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+            <p class="white-text">
+              <i class="fas fa-home mr-3"></i> гр. Русе, жк. Родина, ул. Самодивец №20
+            </p>
+            <p class="white-text">
+              <a href="mailto:priateli@abv.bg"><i class="fas fa-at mr-3"></i> priateli@abv.bg</a>
+            </p>
+            <p class="white-text">
+              <a href="tel:0876442740"><i class="fas fa-phone mr-3"></i> 0876 442 740</a>
+            </p>
+            <p class="white-text">
+              <a href="tel:0878222317"><i class="fas fa-phone mr-3"></i> 0878 222 317</a>
+            </p>
+
+            <p class="contact">Последвайте ни във Фейсбук:</p>
+            <a class="fb-ic">
+              <a href="https://facebook.com/priateliruse/"><i class="fab fa-facebook fa-lg white-text mr-md-5 mr-4 fa-2x"></a></i>
+            </a></p>
+
+          </div>
+          <!-- Grid column -->
+
+          <div class="col-md-6 mt-md-0 mt-3">
+
+            <!-- Content -->
+            <h5 id="for-us" class="text-uppercase font-weight-bold">За нас</h5>
+            <p class="for-us">Ресторант Приятели е уютно и приятно мястенце, сгушено на тихо и спокойно място в жк.
+              Родина. При нас може да си изкарате добре Вие и цялата компания.
+              Приготвяме храната за Вас, с най-високо качество и внимание към детайлите. За нас доволният клиент е
+              най-важен!
+              При нас може да се насладите на приятна атмосвера и да отпразнувате празника си или просто да похапнете
+              вкусно!</p>
+
+          </div>
+
+        </div>
+        <!-- Grid row -->
+
+      </div>
+      <!-- Footer Text -->
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">© 2022 Copyright: Ресторант Приятели ©
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+  </section>
+
+</body>
+
+</html>

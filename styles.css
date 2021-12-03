@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Marck+Script&family=Russo+One&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(32, 32, 32);
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Russo One', sans-serif;
+    font-family: 'Marck Script', cursive;
+}
+
+#nav-bar{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.navbar-brand img{
+    position: relative;
+    margin: 0 auto;
+    transition: 0.5s;
+}
+
+.navbar-brand img:hover{
+    transform: scale(1.3);
+}
+
+#nav-bar .navbar-toggler {
+    border-color: grey;
+}
+
+#nav-bar ul li{
+    padding: 0 15px;
+}
+
+#nav-bar ul li a{
+    float: right;
+    text-align: center;
+    transition: 0.5s;
+    color: white;
+}
+#nav-bar ul li .menu-short{
+    font-weight: bold;
+    animation: pulse .8s infinite ease;
+}
+
+@keyframes pulse {
+    from{color: white;}
+    to{color: orangered;}
+}
+
+#nav-bar ul li a:hover{
+    transform: scale(1.3);
+    color: orangered;
+}
+
+.nav-bar{
+    background-color: transparent;
+
+}
+
+.navbar-toggler{
+    border: none;
+}
+
+.nav-link{
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.header-phone, .header-mail{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container-fluid{
+    position: relative;
+    display: inline-block;
+}
+
+
+
+
+/*--------------SLIDE BAR------------*/
+
+.slider .mySlides {
+    width: 100%;
+    height: auto;
+    padding: 0 2rem 0 2rem;
+    -webkit-box-reflect: below 10px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent) , to(rgba(250, 250, 250, 0.1)));  
+}
+
+
+
+  /*-------------MENU----------------*/
+
+.section-padding{
+    padding: 60px 0px;
+}
+
+.marb-35{
+    margin-bottom: 35px;
+}
+
+.header-h{
+    font-size: 60px;
+    color: white;
+    font-family: 'Russo One', sans-serif;
+    font-weight: 300;
+    text-shadow: 3px 3px 3px grey;
+    letter-spacing: 5px;
+}
+
+#menu-filters{
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.menu-filters ul li:hover {
+    background-color: transparent;
+}
+
+#menu-filters ul{
+    padding: 0px;
+}
+
+#menu-filters ul li{
+    font-family: 'Russo One', sans-serif;
+    display: inline-block;
+    color: #fff;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 15px;
+    border: 1px solid #BBBBBB;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+#menu-filters ul li:hover{
+    background-color: orangered;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.62);
+}
+
+.menu-wrapper{
+    padding-top: 35px;
+    transform: translate(1.3%);
+    border-bottom: 1px solid grey;
+}
+
+.menu-restaurant{
+    width: 50%;
+    float: left;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    background-color: transparent;
+}
+.menu-restaurant::after{
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: chocolate;
+}
+
+.menu-restaurant .menu-title{
+    float: left;
+    font-family: 'Russo One', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color:rgb(211, 208, 208);
+    text-decoration: none;
+    max-width: 85%;
+    background-color: transparent;
+}
+
+@media screen and (max-width: 650px) {
+    .menu-restaurant .menu-title {
+      max-width: 430px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .menu-restaurant .menu-title {
+      max-width: 250px;
+    }
+}
+
+/* .menu-restaurant .clearfix .menu-line{
+    position: absolute;
+    bottom: 6px;
+    border-bottom: 1px dotted rgb(255, 255, 255);
+    margin-left: .6rem;
+    margin-right: .6rem;
+    overflow-wrap: break-word;
+} */
+
+.menu-restaurant .menu-price{
+    font-weight: 600;
+    position: relative;
+    right: 0;
+    top: 0;
+    color: rgb(255, 115, 0);
+    font-weight: bold;
+    float: right;
+    background-color: transparent;
+    border-top: 0.5px solid grey;
+    border-bottom: 0.5px solid grey;
+}
+
+.menu-restaurant .menu-subtitle{
+    display: block;
+    float: left;
+    color: #8f8e8e;
+    font-size: 1rem;
+    background-color: transparent;
+}
+
+.menu-restaurant span.clearfix{
+    position: relative;
+    display: block;
+    background-color: transparent;
+    transition-duration: 800ms;
+}
+
+#menu-list{
+    border-bottom: 1px solid white;
+}
+
+
+
+/* --------GOOGLE BOX-------- */
+
+#google{
+    text-align: center;
+    margin-top: 50px;
+    margin: 10% 0;
+}
+
+/*------------- FOOTER --------------*/
+.page-footer{
+    color: white;
+}
+
+.white-text a{
+    text-decoration: none;
+    color: white;
+}
+.white-text a:hover{
+    color: orangered;
+}
+
+.mt-3{
+    border-left: 1px dotted grey;
+}
+
+.footer-copyright{
+    color: white;
+    background-color: black;
+    border-top: 1px solid white;
+}
+
+
+
+/* ---------------------------C A R T--------------------------- */
+
