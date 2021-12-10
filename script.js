@@ -1,45 +1,40 @@
-// to get current year
-function getYear() {
-    var currentDate = new Date();
-    var currentYear = currentDate.getFullYear();
-    document.querySelector("#displayYear").innerHTML = currentYear;
+
+// START CAROUSEL  //
+
+let myIndex = 0;
+carousel();
+
+function carousel() {
+    let i;
+    let x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) { myIndex = 1 }
+    x[myIndex - 1].style.display = "block";
+    setTimeout(carousel, 3000); // Change image every 2 seconds
 }
 
-getYear();
+// END CAROUSEL  //
 
+//--------------------------------------------------------------------------------//
 
+//  START FILTER  //
 
-
-$(window).on('load', function () {
-    $('.menu-filters li a').click(function () {
-        $('.menu-filters li a').removeClass('filter');
-        $(this).addClass('filter');
-
-        var data = $(this).attr('data-filter');
-        $grid.isotope({
-            filter: data
-        })
-    });
-
-    var $grid = $(".clearfix").isotope({
-        itemSelector: ".menu-restaurant",
-        percentPosition: false,
-        masonry: {
-            columnWidth: ".menu-restaurant"
+$(document).ready(function () {
+    $('.filter').click(function () {
+        let value = $(this).attr('data-filter');
+        if (value == 'menu-restaurant') {
+            $('.menu-restaurant').show('1000');
+        }
+        else {
+            $('.menu-restaurant').not('.' + value).hide('1000');
+            $('.menu-restaurant').filter('.' + value).show('1000');
         }
     })
-});
+})
 
-// nice select
-$(document).ready(function() {
-    $('select').niceSelect();
-  });
+//  END FILTER  //
 
-/** google_map js **/
-function myMap() {
-    var mapProp = {
-        center: new google.maps.LatLng(40.712775, -74.005973),
-        zoom: 18,
-    };
-    var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-}
+//------------------------------------------------------------------------------------/
