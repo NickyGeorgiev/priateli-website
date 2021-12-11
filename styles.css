@@ -178,6 +178,7 @@ body{
     font-weight: 300;
     text-shadow: 3px 3px 3px grey;
     letter-spacing: 5px;
+    margin-top: 5%;
 }
 
 #menu-filters{
@@ -390,7 +391,15 @@ body{
 }
 
 /*------------- FOOTER --------------*/
+
+#footer-section{
+    border-top: .5px solid white;
+}
+.clearfix{
+    display: none;
+}
 .page-footer{
+
     color: var(--text-color);
 }
 
@@ -402,14 +411,13 @@ body{
     color: var(--my-color);
 }
 
-.mt-3{
+.mt-3:last-child{
     border-left: 1px dotted grey;
 }
 
 .footer-copyright{
     color: var(--text-color);
-    background-color: black;
-    border-top: 1px solid white;
+    background-color: rgb(0, 0, 0);
 }
 
 
@@ -513,7 +521,7 @@ body{
     font-size: 1.5rem;
 }
 
-/* .btn-success2{
+.btn-success{
     position: relative;
     margin: 40px auto 80px auto;
     text-transform: uppercase;
@@ -521,7 +529,7 @@ body{
     left: 50%;
     transform: translate(-50%);
     box-shadow: 10px 10px 20px 10px rgb(9, 109, 9) inset;
-} */
+}
 
 .btn-purchase{
     margin: 40px auto 80px auto;
@@ -540,7 +548,12 @@ body{
     font-size: 1.1rem;
     color: var(--text-color);
 }
-
+.summary p{
+    margin-bottom: 0px;
+}
+.summary::marker{
+    color: var(--bg-color);
+}
 
 details[open] summary ~ * {
     animation: sweep 1s ease-in-out;
@@ -566,13 +579,22 @@ details[open] summary ~ * {
     margin: 0 20%;
     max-width: 90%;
     flex-wrap: wrap;
-
+    justify-content: center;
 }
-.address-info{
+/* .address-info{
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
     margin: 0 20%;
+} */
+.submit{
+    background-color: var(--my-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    border-radius: 25px;
+    margin: 5% auto 0 auto;
+    padding: 1.5% 1.5%;
 }
 #first, #last, #tel, #address, #adress-number, #blok, #vhod{
     background-color: var(--bg-color);
