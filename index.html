@@ -9,6 +9,7 @@
   <title>Ресторант Приятели</title>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="cart.js"></script>
+  <script src="smtp.js"></script>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -60,7 +61,7 @@
 <!--===========КРАЙ НАВИГАЦИЯ=============-->
 
 
-<!--==========КОЛИЧКА==========-->
+<!--==========КАРОСЕЛ==========-->
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -83,40 +84,46 @@
       <span class="visually-hidden">Следващ</span>
     </button>
   </div>
+<!--==========КРАЙ КАРОСЕЛ==========-->
 
 
-
-
+<!--==========КОЛИЧКА==========-->
   <section id="cart" class="content-section">
     <h4 class="section-header">КОЛИЧКА</h4>
     <div class="cart-row">
       <span class="cart-item cart-header cart-column">Продукти</span>
       <span class="cart-price cart-header cart-column">Цена</span>
-      <span class="cart-quantity cart-header cart-column">Колочество</span>
+      <span class="cart-quantity cart-header cart-column">Количество</span>
     </div>
 
     <div class="cart-items">
 
+          <!--=========ТУК СЕ ДОБАВЯТ АРТИКУЛИТЕ=========-->
+
     </div> 
         
         <div class="cart-total">
+          <span class="dostavka">Цена за доставка: <span id="dostavka-price">1.99</span> лв.</span>
           <span class="cart-total-title">Обща сума:</span>
           <span class="cart-total-price">00.00 лв.</span>
         </div>
+        <input type="text" id="dopalnitelno" placeholder="Напишете, ако имате алергия към някой от продуктите">
 <!--===========КРАЙ КОЛИЧКА=============-->
 
 
 <!--===========ФОРМА=============-->
         <details>
-          <summary class="summary"><p class="header-form">Добавете Вашите данни <strong class="here">ТУК</strong></p></summary>
+          <summary class="summary"><p class="header-form">Продължете с поръчката</p></summary>
+          <div class="information">
+          </div>
           <p class="required">Полетата със * са задължителни за попълване!</p>
           <form class="client-info" name="google-sheet" method="POST">
-            <label for="first"></label>
+            <label for="first" ></label>
             <input type="text" id="first" name="first" required placeholder="Име *">
             <label for="last"></label>
             <input type="text" id="last" name="last" placeholder="Фамилия">
             <label for="tel"></label>
-            <input type="tel" id="tel" name="tel" required placeholder="Телефон *">
+            <input type="number" id="tel" name="tel" required placeholder="Телефон *">
             <label for="address"></label>
             <input type="text" id="address" name="address" required placeholder="Улица *" >
             <label for="adress-number"></label>
@@ -129,10 +136,11 @@
             <input class="submit" type="submit" value="Запази данните и продължи">
           </form>
           <div class='load'><i class='fa fa-spinner fa-spin' style="color: white;"></i> Моля изчакайте...</div>
-          <button class="btn btn-success btn-purchase btn-lg" type="button">Направи поръчка</button>
         </details>
+        <button class="btn-purchase btn-lg" type="button">Направи поръчка</button>
   </section>
 <!--===========КРАЙ ФОРМА=============-->
+
 
 <!--===============МЕНЮ===============-->
 
@@ -146,7 +154,7 @@
   <!--===============ФИЛТЪР==============-->
         <div class="col-md-12 text-center" id="menu-filters">
           <ul>
-            <li class="filter" data-filter="menu-restaurant">Покажи всички</li>
+            <li class="filter picked" data-filter="menu-restaurant">Покажи всички</li>
             <li class="filter" data-filter="salati">Салати</li>
             <li class="filter" data-filter="kartofeni-vkusotiiki">Картофени вкусотийки</li>
             <li class="filter" data-filter="bezmesni">Безмесни</li>
@@ -175,7 +183,8 @@
           <div class="salati menu-restaurant">
               <div class="menu-title">Шопска салата (400 гр.)</div>
               <div class="menu-subtitle">/домати, краставици, печен пипер, лук, сирене/</div>
-              <div class="menu-price">5.49 лв.</div>
+              <div class="menu-price old-price" style="color: red;">7.49 лв.</div>
+              <div class="menu-price">6.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
           
@@ -183,14 +192,16 @@
           <div class="salati menu-restaurant">
               <div class="menu-title">Овчарска салата (500 гр.)</div>
               <div class="menu-subtitle">/домати, краставици, печен пипер, лук, гъби, шунка, кашкавал, сирене/</div>
-              <div class="menu-price">6.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">7.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="salati menu-restaurant">
               <div class="menu-title">Зелена салата с яйце (400 гр.)</div>
               <div class="menu-subtitle">/зелена салата, краставици, репички, пресен лук, варено яйце/</div>
-              <div class="menu-price">6.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">7.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
@@ -198,64 +209,73 @@
           <div class="salati menu-restaurant">
               <div class="menu-title">Салата на Шефа (400 гр.)</div>
               <div class="menu-subtitle">/домати, катък, печен пипер, луканка, билково песто/</div>
-              <div class="menu-price">7.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">8.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="salati menu-restaurant">
               <div class="menu-title">Салата "Приятели" (400 гр.)</div>
-              <div class="menu-subtitle">/айсберг, краставици, чери домати, мариновано сирене, крутони, орехи, пил. филе
+              <div class="menu-subtitle">/зелена салата, краставици, чери домати, мариновано сирене, крутони, орехи, пил. филе
                 на скара/</div>
-              <div class="menu-price">8.99 лв.</div>
+                <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">9.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="salati menu-restaurant">
               <div class="menu-title">Салата "Цезар" (400 гр.)</div>
-              <div class="menu-subtitle">/айсберг, пил. филе на скара, бекон, крутони, пармезан, дресинг/</div>
-              <div class="menu-price">8.99 лв.</div>
+              <div class="menu-subtitle">/зелена салата, пил. филе на скара, бекон, крутони, пармезан, дресинг/</div>
+              <div class="menu-price old-price" style="color: red;">7.89 лв.</div>
+              <div class="menu-price">9.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="salati menu-restaurant">
               <div class="menu-title">Салата Капрезе (350 гр.)</div>
               <div class="menu-subtitle">/белени домати, сирене Моцарела, билково песто/</div>
-              <div class="menu-price">7.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">8.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="salati menu-restaurant">
               <div class="menu-title">Гръцка салата (400 гр.)</div>
               <div class="menu-subtitle">/домат, краставица, пресен пипер, лук, мариновано сирене/</div>
-              <div class="menu-price">6.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">7.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="salati menu-restaurant">
               <div class="menu-title">Салата зеле с моркови (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">3.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">4.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="salati menu-restaurant">
               <div class="menu-title">Снежанка с орехи (300 гр.)</div>
               <div class="menu-subtitle">/цедено кисело мляко, краставици, орехи/</div>
-              <div class="menu-price">5.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">6.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="salati menu-restaurant">
               <div class="menu-title">Картофена салата с лук (350 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">4.49 лв.</div>
+              <div class="menu-price old-price" style="color: red;">3.93 лв.</div>
+              <div class="menu-price">5.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="salati menu-restaurant">
               <div class="menu-title">Катък (300 гр.)</div>
               <div class="menu-subtitle">/цедено кисело мляко, сирене, чесън, печен пипер/</div>
-              <div class="menu-price">5.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">6.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--=========КРАЙ САЛАТИ=========-->
@@ -264,49 +284,56 @@
           <div class="kartofeni-vkusotiiki menu-restaurant">
               <div class="menu-title">Пържени картофи (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">3.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">4.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="kartofeni-vkusotiiki menu-restaurant">
               <div class="menu-title">Пържени картофи със сирене (350 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">4.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">4.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="kartofeni-vkusotiiki menu-restaurant">
               <div class="menu-title">Домашни пържени картофи (500 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">4.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">4.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="kartofeni-vkusotiiki menu-restaurant">
               <div class="menu-title">Домашни пържени картофи със сирене (550 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">4.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">5.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="kartofeni-vkusotiiki menu-restaurant">
               <div class="menu-title">Пикантни селски картофи с чесново сосче (200 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">4.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">4.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="kartofeni-vkusotiiki menu-restaurant">
               <div class="menu-title">Картофен чипс (400 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">6.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">7.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="kartofeni-vkusotiiki menu-restaurant">
               <div class="menu-title">Картофи соте (400 гр.)</div>
               <div class="menu-subtitle">/картофи, чесън, копър/</div>
-              <div class="menu-price">4.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">5.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--===========КРАЙ КАРТОФЕНИ ВКУСОТИЙКИ===========-->
@@ -315,49 +342,56 @@
           <div class="bezmesni menu-restaurant">
               <div class="menu-title">Хрупкави топени сиренца със сладко от боровинки (250 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">7.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">8.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="bezmesni menu-restaurant">
               <div class="menu-title">Сиренца пане (250 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">6.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">7.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="bezmesni menu-restaurant">
               <div class="menu-title">Кашкавалчета пане (250 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">7.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">8.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="bezmesni menu-restaurant">
               <div class="menu-title">Кашкавал пане плочка (200 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">7.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">8.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="bezmesni menu-restaurant">
               <div class="menu-title">Омлет със сирене (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">5.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">6.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="bezmesni menu-restaurant">
               <div class="menu-title">Омлет с шунка (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">6.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">7.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="bezmesni menu-restaurant">
               <div class="menu-title">Миш-маш със сирене (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">6.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">7.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--===========КРАЙ БЕЗМЕСНИ===========-->
@@ -366,79 +400,106 @@
           <div class="pileshka-skara menu-restaurant">
               <div class="menu-title">Пилешко шишче (120 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">2.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">3.49 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshka-skara menu-restaurant">
               <div class="menu-title">Пилешка пържола от филе (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">8.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">10.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshka-skara menu-restaurant">
               <div class="menu-title">Пилешка пържола от бутче (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">8.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">10.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshka-skara menu-restaurant">
               <div class="menu-title">Пилешка мешана скара (500 гр.)</div>
               <div class="menu-subtitle">/пържола, шишче, крилце, кебапче, кютфе/</div>
-              <div class="menu-price">15.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">18.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshka-skara menu-restaurant">
               <div class="menu-title">Крилца на скара (400 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">7.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">8.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshka-skara menu-restaurant">
-              <div class="menu-title">Кебапче / Кюфте (80 гр.)</div>
+              <div class="menu-title">Кебапче (80 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">1.79 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">2.59 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
+
+          <div class="pileshka-skara menu-restaurant">
+            <div class="menu-title">Кюфте (80 гр.)</div>
+            <div class="menu-subtitle"></div>
+            <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+            <div class="menu-price">2.59 лв.</div>
+          <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
+        </div>
   <!--===========КРАЙ ПИЛЕШКА СКАРА============-->
 
   <!--============СВИНСКА СКАРА===========-->
           <div class="svinska-skara menu-restaurant">
               <div class="menu-title">Свинско шишче (120 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">2.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">3.49 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="svinska-skara menu-restaurant">
-              <div class="menu-title">Кебапче / Кюфте (80 гр.)</div>
+              <div class="menu-title">Кебапче (80 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">1.79 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">2.59 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
+
+          <div class="svinska-skara menu-restaurant">
+            <div class="menu-title">Кюфте (80 гр.)</div>
+            <div class="menu-subtitle"></div>
+            <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+            <div class="menu-price">2.59 лв.</div>
+          <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
+        </div>
 
           <div class="svinska-skara menu-restaurant">
               <div class="menu-title">Свински бекончета на скара (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">8.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">9.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="svinska-skara menu-restaurant">
               <div class="menu-title">Свински ребърца (500 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">14.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">17.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="svinska-skara menu-restaurant">
               <div class="menu-title">Свинска мешана скара (500 гр.)</div>
               <div class="menu-subtitle">/пържола, шишче, кюфте, кебапче/</div>
-              <div class="menu-price">15.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">18.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--============КРАЙ СВИНСКА СКАРА============-->
@@ -447,72 +508,90 @@
           <div class="pileshki-mezeta menu-restaurant">
               <div class="menu-title">Пилешки сърца с лук (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">6.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">7.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshki-mezeta menu-restaurant">
               <div class="menu-title">Хрупкави пилешки филенца с корнфлейкс и чесново сосче (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">7.99 лв.</div>
+              <div class="menu-price old-price" style="color: red;">7.13 лв.</div>
+              <div class="menu-price">9.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshki-mezeta menu-restaurant">
               <div class="menu-title">Панирани пилешки хапки с чесново сосче (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">7.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">8.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshki-mezeta menu-restaurant">
               <div class="menu-title">Пикантни крилца (400 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">7.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">8.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshki-mezeta menu-restaurant">
               <div class="menu-title">Пилешки дробчета с лук (400 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">6.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">7.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshki-mezeta menu-restaurant">
               <div class="menu-title">Пилешки флейки в соев сос (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">8.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">10.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--=============КРАЙ ПИЛЕШКИ МЕЗЕТА============-->
 
   <!--=============СВИНСКИ МЕЗЕТА============-->
           <div class="svinski-mezeta menu-restaurant">
-              <div class="menu-title">Свински дроб на тиган / скара (400 гр.)</div>
+              <div class="menu-title">Свински дроб на тиган (400 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">6.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">7.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="svinski-mezeta menu-restaurant">
+            <div class="menu-title">Свински дроб на скара (400 гр.)</div>
+            <div class="menu-subtitle"></div>
+            <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+            <div class="menu-price">7.79 лв.</div>
+          <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
+        </div>
+
+          <div class="svinski-mezeta menu-restaurant">
               <div class="menu-title">Пресен суджук на скара (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">8.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">10.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="svinski-mezeta menu-restaurant">
               <div class="menu-title">Свински език в масло (200 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">8.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">12.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="svinski-mezeta menu-restaurant">
               <div class="menu-title">Свински каренца на тиган (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">10.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">11.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--=============КРАЙ СВИНСКИ МЕЗЕТА============-->
@@ -521,49 +600,56 @@
           <div class="pileshki-qstiq menu-restaurant">
               <div class="menu-title">Пилешки филенца с броколи, сметана, топено сирене и пармезан (350 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">11.99 лв.</div>
+              <div class="menu-price old-price" style="color: red;">10.33 лв.</div>
+              <div class="menu-price">13.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshki-qstiq menu-restaurant">
-              <div class="menu-title">Пиле с бекон и сос от сирена (350 гр.)</div>
+              <div class="menu-title">Пиле с бекон и сос от сирена (400 гр.)</div>
               <div class="menu-subtitle">/пържола от бут, бекон, сос от сирена/</div>
-              <div class="menu-price">10.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">13.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshki-qstiq menu-restaurant">
               <div class="menu-title">Пилешки филенца със зеленчуци и кашкавал (400 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">10.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">12.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshki-qstiq menu-restaurant">
               <div class="menu-title">Пиле с моцарела и доматена салца (400 гр.)</div>
               <div class="menu-subtitle">/пилешко филе, босилек, моцарела, патладжан, тиквичка/</div>
-              <div class="menu-price">10.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">12.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshki-qstiq menu-restaurant">
               <div class="menu-title">Пиле Фантазия (400 гр.)</div>
               <div class="menu-subtitle">/пилешко филе, гъбки, кашкавал, домат, кисели краставички/</div>
-              <div class="menu-price">10.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">12.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshki-qstiq menu-restaurant">
               <div class="menu-title">Пилешки каренца с лек сметанов сос и гъбки (350 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">10.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">12.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="pileshki-qstiq menu-restaurant">
               <div class="menu-title">Пилешка кавърма (400 гр.)</div>
               <div class="menu-subtitle">/пилешко филе, печен пипер, гъбки, домати, лук/</div>
-              <div class="menu-price">10.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">13.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--=============КРАЙ ПИЛЕШКИ ЯСТИЯ============-->
@@ -572,42 +658,48 @@
           <div class="svinski-qstiq menu-restaurant">
               <div class="menu-title">Свинско филе с гъбен сос (400 гр.)</div>
               <div class="menu-subtitle">/свинско бон филе с гъен сос върху картофено пюре/</div>
-              <div class="menu-price">11.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">13.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="svinski-qstiq menu-restaurant">
               <div class="menu-title">Свинско филе с топено сирене, гъби и сметана (400 гр.)</div>
               <div class="menu-subtitle">/свинско бон филе със сос от пресни гъби, топено сирене и сметана/</div>
-              <div class="menu-price">11.99 лв.</div>
+              <div class="menu-price old-price" style="color: red;">10.33 лв.</div>
+              <div class="menu-price">13.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="svinski-qstiq menu-restaurant">
               <div class="menu-title">Свински друсан кебап с лук и гъби (400 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">9.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">12.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="svinski-qstiq menu-restaurant">
               <div class="menu-title">Свинска вратна пържола с гриловани зеленчуци (350 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">10.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">13.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="svinski-qstiq menu-restaurant">
               <div class="menu-title">Свинска кавърма (400 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">9.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">13.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="svinski-qstiq menu-restaurant">
               <div class="menu-title">Свинска вратна пържола (300 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">8.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">11.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--=============КРАЙ СВИНСКИ ЯСТИЯ============-->
@@ -616,28 +708,32 @@
           <div class="sachove menu-restaurant">
               <div class="menu-title">Пилешки сач (600 гр.)</div>
               <div class="menu-subtitle">/пилешки филенца, зеленчуци и кашкавал/</div>
-              <div class="menu-price">16.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">19.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="sachove menu-restaurant">
               <div class="menu-title">Свински сач (600 гр.)</div>
               <div class="menu-subtitle">/свински каренца, зеленчуци и кашкавал/</div>
-              <div class="menu-price">16.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">19.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="sachove menu-restaurant">
               <div class="menu-title">Комбиниран сач (600 гр.)</div>
               <div class="menu-subtitle">/пилешко филе, свински каренца, зеленчуци и кашкавал/</div>
-              <div class="menu-price">18.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">21.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="sachove menu-restaurant">
               <div class="menu-title">Зеленчуков сач (600 гр.)</div>
               <div class="menu-subtitle">/зеленчуци и кашкавал/</div>
-              <div class="menu-price">12.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">15.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--=============КРАЙ САЧОВЕ============-->
@@ -646,35 +742,40 @@
           <div class="spageti menu-restaurant">
               <div class="menu-title">Спагети с пилешко филе, гъбки, сметана и кашкавал (500 гр.)</div>
               <div class="menu-subtitle">/спагети, бекон, яйца, сметана, кашкавал/</div>
-              <div class="menu-price">7.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">9.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="spageti menu-restaurant">
               <div class="menu-title">Спагети Карбонара (500 гр.)</div>
               <div class="menu-subtitle">/спагети, бекон, яйца, сметана, кашкавал/</div>
-              <div class="menu-price">7.99 лв.</div>
+              <div class="menu-price old-price" style="color: red;">7.13 лв.</div>
+              <div class="menu-price">9.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="spageti menu-restaurant">
               <div class="menu-title">Спагети Болонезе (500 гр.)</div>
               <div class="menu-subtitle">/спагети, кайма, лук, чесън, доматен сос, кашкавал/</div>
-              <div class="menu-price">7.99 лв.</div>
+              <div class="menu-price old-price" style="color: red;">7.13 лв.</div>
+              <div class="menu-price">9.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="spageti menu-restaurant">
               <div class="menu-title">Спагети с пиле (500 гр.)</div>
               <div class="menu-subtitle">/спагети, пилешко филе, доматен сос, кашкавал/</div>
-              <div class="menu-price">7.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">8.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="spageti menu-restaurant">
               <div class="menu-title">Зеленчукови спагети (500 гр.)</div>
               <div class="menu-subtitle">/спагети, зеленчуци, сметана, кашкавал/</div>
-              <div class="menu-price">5.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">6.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--=============КРАЙ СПАГЕТИ============-->
@@ -683,21 +784,24 @@
           <div class="rizoto menu-restaurant">
               <div class="menu-title">Ризото с пиле (500 гр.)</div>
               <div class="menu-subtitle">/ориз "Арборио", пилешко филе, лук, сметана, пармезан/</div>
-              <div class="menu-price">7.99 лв.</div>
+              <div class="menu-price old-price" style="color: red;">7.13 лв.</div>
+              <div class="menu-price">9.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="rizoto menu-restaurant">
               <div class="menu-title">Зеленчуково ризото (400 гр.)</div>
               <div class="menu-subtitle">/ориз "Арборио", зеленчуци, пармезан, сметана/</div>
-              <div class="menu-price">6.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">7.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="rizoto menu-restaurant">
               <div class="menu-title">Ризото с печурки (400 гр.)</div>
               <div class="menu-subtitle">/ориз "Арборио", печурки, сметана, пармезан/</div>
-              <div class="menu-price">7.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">8.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--=============КРАЙ РИЗОТО============-->
@@ -706,44 +810,74 @@
           <div class="garnituri menu-restaurant">
               <div class="menu-title">Студена гарнитура (300 гр.)</div>
               <div class="menu-subtitle">/домати, краставици, зеле с моркови/</div>
-              <div class="menu-price">3.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">4.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="garnituri menu-restaurant">
               <div class="menu-title">Топла гарнитура (200 гр.)</div>
               <div class="menu-subtitle">/ориз със зеленчуци/</div>
-              <div class="menu-price">3.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">4.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="garnituri menu-restaurant">
               <div class="menu-title">Картофено пюре (200 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">3.49 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">3.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="garnituri menu-restaurant">
               <div class="menu-title">Задушени зеленчуци (200 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">3.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">4.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="garnituri menu-restaurant">
-              <div class="menu-title">Кетчуп, майонеза, горчица (60 гр.)</div>
+              <div class="menu-title">Кетчуп (60 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">0.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">1.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="garnituri menu-restaurant">
-              <div class="menu-title">Млечен / чеснов сос (60 гр.)</div>
+            <div class="menu-title">Майонеза (60 гр.)</div>
+            <div class="menu-subtitle"></div>
+            <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+            <div class="menu-price">1.29 лв.</div>
+          <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
+        </div>
+
+        <div class="garnituri menu-restaurant">
+          <div class="menu-title">Горчица (60 гр.)</div>
+          <div class="menu-subtitle"></div>
+          <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+          <div class="menu-price">1.29 лв.</div>
+        <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
+      </div>
+
+          <div class="garnituri menu-restaurant">
+              <div class="menu-title">Млечен сос (60 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">0.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">1.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
+
+          <div class="garnituri menu-restaurant">
+            <div class="menu-title">Чеснов сос (60 гр.)</div>
+            <div class="menu-subtitle"></div>
+            <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+            <div class="menu-price">1.29 лв.</div>
+          <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
+        </div>
   <!--=============КРАЙ ГАРНИТУРИ============-->
 
   <!--=============ПИТКИ============-->
@@ -801,72 +935,92 @@
           <div class="mezeta menu-restaurant">
               <div class="menu-title">Филе Елена (50 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">3.99 лв.</div>
+              <div class="menu-price">4.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="mezeta menu-restaurant">
               <div class="menu-title">Суджук (50 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">2.99 лв.</div>
+              <div class="menu-price">3.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="mezeta menu-restaurant">
               <div class="menu-title">Луканка (50 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">2.99 лв.</div>
+              <div class="menu-price">3.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="mezeta menu-restaurant">
               <div class="menu-title">Шпек салам (50 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">1.99 лв.</div>
+              <div class="menu-price">2.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="mezeta menu-restaurant">
               <div class="menu-title">Сирене натюр (50 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">1.49 лв.</div>
+              <div class="menu-price">1.79 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="mezeta menu-restaurant">
               <div class="menu-title">Кашкавал натюр (50 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">1.89 лв.</div>
+              <div class="menu-price">2.19 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--=============КРАЙ МЕЗЕТА============-->
 
   <!--=============ДЕСЕРТИ============-->
-          <div class="deserti menu-restaurant">
+          <!-- <div class="deserti menu-restaurant">
               <div class="menu-title">Сладоледена торта (150 гр.)</div>
               <div class="menu-subtitle"></div>
+              <div class="menu-price old-price" style="color: red;">7.49 лв.</div>
               <div class="menu-price">4.99 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
-          </div>
+          </div> -->
 
           <div class="deserti menu-restaurant">
-              <div class="menu-title">Палачинка с шоколад / сладко / мед (200 гр.)</div>
+              <div class="menu-title">Палачинка с шоколад (200 гр.)</div>
               <div class="menu-subtitle"></div>
-              <div class="menu-price">2.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">3.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
 
           <div class="deserti menu-restaurant">
+            <div class="menu-title">Палачинка със сладко (200 гр.)</div>
+            <div class="menu-subtitle"></div>
+            <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+            <div class="menu-price">3.29 лв.</div>
+          <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
+        </div>
+
+        <div class="deserti menu-restaurant">
+          <div class="menu-title">Палачинка с мед (200 гр.)</div>
+          <div class="menu-subtitle"></div>
+          <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+          <div class="menu-price">3.29 лв.</div>
+        <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
+      </div>
+
+          <!-- <div class="deserti menu-restaurant">
               <div class="menu-title">Сладолед ванилия / шоколад (120 гр.)</div>
               <div class="menu-subtitle"></div>
+              <div class="menu-price old-price" style="color: red;">7.49 лв.</div>
               <div class="menu-price">2.99 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
-          </div>
+          </div> -->
 
           <div class="deserti menu-restaurant">
               <div class="menu-title">Цедено кисело мляко (200 гр.)</div>
               <div class="menu-subtitle">/сладко от боровинки; мед и орехи/</div>
-              <div class="menu-price">2.99 лв.</div>
+              <!-- <div class="menu-price old-price" style="color: red;">7.49 лв.</div> -->
+              <div class="menu-price">3.29 лв.</div>
             <button class="buy-button"><i class="fas fa-shopping-bag"></i></button>
           </div>
   <!--=============КРАЙ ДЕСЕРТИ============-->
@@ -953,8 +1107,7 @@
 
     </footer>
   </section>
-
-
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
 </body>
 
 </html>

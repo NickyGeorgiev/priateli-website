@@ -5,15 +5,12 @@ let myIndex = 0;
 carousel();
 
 function carousel() {
-    let i;
     let x = document.getElementsByClassName("mySlides");
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-    }
+    x.map(x => x.style.display = 'none');
     myIndex++;
-    if (myIndex > x.length) { myIndex = 1 }
+    myIndex > x.length ? myIndex = 1 :
     x[myIndex - 1].style.display = "block";
-    setTimeout(carousel, 3000); // Change image every 2 seconds
+    setTimeout(carousel, 3000); // recursive every 3 seconds
 }
 
 // END CAROUSEL  //
@@ -36,5 +33,6 @@ $(document).ready(function () {
 })
 
 //  END FILTER  //
+
 
 //------------------------------------------------------------------------------------/

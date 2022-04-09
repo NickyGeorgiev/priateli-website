@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Marck+Script&family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marck+Script&family=Russo+One&display=swap');
 *{
     margin: 0;
     padding: 0;
@@ -13,6 +14,7 @@
 }
 
 body{
+    /* font-family: 'Marck Script', cursive; */
     font-family: 'Russo One', sans-serif;
     font-family: 'Marck Script', cursive;
     background-color: var(--bg-color);
@@ -246,6 +248,10 @@ body{
 /* ||                    CART                   || */
 /* =============================================== */
 
+#cart{
+    display: none;
+}
+
 .content-section{
     font-family: 'Russo One', sans-serif;
     padding-top: 15%;
@@ -279,31 +285,41 @@ body{
 .cart-item{
     margin-left: .5rem;
     width: 40%;
+
 }
 
 .cart-price{
     width: 20%;
     color: var(--text-color);
+    justify-content: center;
 }
 
 .cart-quantity{
     width: 30%;
+    justify-content: center;
+
 }
 
 .cart-item-title{
     color: var(--text-color);
-    margin-left: 1.2rem;
+    /* margin-left: 1.2rem; */
     font-size: 1rem;
 }
 
-.btn-danger{
-    color: var(--text-color);
-    background-color: #EB5757;
-    border:none;
+.btn{
     border-radius: 50%;
 }
 
-.btn-danger:hover{
+.btn-delete{
+    width: 2rem;
+    height: 2rem;
+    color: var(--text-color);
+    background-color: #EB5757;
+    border-radius: 50%;
+    border-color: var(--text-color);
+}
+
+.btn-delete:hover{
     background-color: #cc4c4c;
 }
 
@@ -326,6 +342,12 @@ body{
 .cart-row:last-child .cart-column{
     border: none;
 }
+.dostavka{
+    display: block;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    margin: 3%
+}
 
 .cart-total{
     text-align: center;
@@ -343,20 +365,41 @@ body{
     font-size: 1.5rem;
 }
 
-.btn-success{
-    position: relative;
-    margin: 40px auto 80px auto;
+.btn-purchase{
+    display:none;
+    position:relative;
+    color: var(--text-color);
+    margin: 40px auto auto auto;
+    box-shadow: 2px 2px 20px 10px rgb(9 109 9) inset;
     text-transform: uppercase;
-    font-size: 2rem;
-    left: 50%;
-    transform: translate(-50%);
-    box-shadow: 10px 10px 20px 10px rgb(9, 109, 9) inset;
 }
 
-.btn-purchase{
-    margin: 40px auto 80px auto;
-    box-shadow: 10px 10px 20px 10px rgb(9, 109, 9) inset;
-    text-transform: uppercase;
+@media screen and (max-width: 650px) {
+    .cart-item-title{
+      font-size: 0.7rem;
+    }
+    .cart-quantity-input{
+        height: 25px;
+        width: 30px;
+    }
+    .btn-delete{
+        height: 1.6rem;
+        width: 1.6rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .cart-item-title{
+      font-size: 0.7rem;
+    }
+    .cart-quantity-input{
+        height: 25px;
+        width: 30px;
+    }
+    .btn-delete{
+        height: 1.6rem;
+        width: 1.6rem;
+    }
 }
 
 /* =============================================== */
@@ -367,22 +410,28 @@ body{
     margin-top: 2%;
     text-align: center;
     font-size: 1.1rem;
-    color: var(--text-color);
+    color: var(--my-color);
 }
 .summary p{
-    margin-bottom: 0px;
+    margin-left:5%;
+    margin-right:5%;
+    margin-bottom: 5%;
+    border: 10px solid var(--my-color);
+    color: var(--text-color);
+    background-color: var(--my-color);
+    font-size: 1.3rem;
 }
 .summary::marker{
     color: var(--bg-color);
 }
 
 details[open] summary ~ * {
-    animation: sweep 1s ease-in-out;
+    animation: sweep 0.8s ease-in-out;
   }
   
   @keyframes sweep {
-    0%    {opacity: 0; margin-top: -100px}
-    100%  {opacity: 1; margin-top: 0px}
+    0%    {opacity: 0; margin-top: -200px}
+    100%  {opacity: 1; margin-top: 10px}
 }
 
 .here{
@@ -402,13 +451,18 @@ details[open] summary ~ * {
     flex-wrap: wrap;
     justify-content: center;
 }
-/* .address-info{
-    display: flex;
+#dopalnitelno{
+    margin-top:3%;
+    width: 100%;
     align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 0 20%;
-} */
+    text-align: center;
+    color: var(--text-color);
+    border: 1px solid var(--my-color);
+    border-radius: 25px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
 .submit{
     background-color: var(--my-color);
     color: var(--text-color);
@@ -443,6 +497,13 @@ details[open] summary ~ * {
     margin-right: 8px;
 }
 
+.alert-success {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+    text-align: center;
+}
+
 /* =============================================== */
 /* ||                     MENU                  || */
 /* =============================================== */
@@ -462,7 +523,7 @@ details[open] summary ~ * {
     font-weight: 300;
     text-shadow: 3px 3px 3px grey;
     letter-spacing: 5px;
-    margin-top: 5%;
+    margin-top: 10%;
 }
 
 #menu-filters{
@@ -498,6 +559,9 @@ details[open] summary ~ * {
     background-color: var(--my-color);
     color: var(--text-color);
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.62);
+}
+.picked{
+    background-color: var(--my-color);
 }
 
 .menu-wrapper{
@@ -548,6 +612,11 @@ details[open] summary ~ * {
     border-bottom: 0.25px solid var(--text-color);
 }
 
+.old-price{
+    text-decoration:line-through;
+    opacity: 0.4;
+}
+
 .menu-restaurant .buy-button{
     position: relative;
     left: 15%;
@@ -565,106 +634,6 @@ details[open] summary ~ * {
 .menu-restaurant .buy-button i:hover{
     transform: scale(1.5);
 }
-
-/*
-.menu-wrapper{
-    padding-top: 35px;
-    border-bottom: 1px solid grey;
-}
-
-
- .menu-restaurant{
-    width: 50%;
-    float: left;
-    position: relative;
-    margin-bottom: 1.5rem;
-    background-color: var(--bg-color);
-    transition: all 500ms;
-}
-
-.buy{
-    content: "";
-    position: absolute;
-    display: inline-block;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    color: var(--text-color);
-    background-color: var(--my-color);
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: 0.5s ease-in-out;
-    opacity: 0;
-    border-radius: 15px;
-}
-.buy>i{
-    position: absolute;
-    left: 50%;
-    right: 50%;
-    top: 10%;
-}
-
-.buy:hover{
-    opacity:1;
-}   
-
-.menu-restaurant .menu-title{
-    float: left;
-    font-family: 'Russo One', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color:var(--text-color);
-    text-decoration: none;
-    max-width: 85%;
-    background-color: transparent;
-}
-
-@media screen and (max-width: 650px) {
-    .menu-restaurant .menu-title {
-      max-width: 430px;
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .menu-restaurant .menu-title {
-      max-width: 250px;
-    }
-}
-
-.menu-restaurant .menu-price{
-    font-weight: 600;
-    position: relative;
-    right: 0;
-    top: 0;
-    color: var(--my-color);
-    font-weight: bold;
-    float: right;
-    background-color: transparent;
-    border-top: 0.5px solid grey;
-    border-bottom: 0.5px solid grey;
-}
-
-.menu-restaurant .menu-subtitle{
-    display: block;
-    float: left;
-    color: #8f8e8e;
-    font-size: 1rem;
-    background-color: transparent;
-}
-
-.clearfix{
-    position: relative;
-    display: block;
-    background-color: transparent;
-    transition-duration: 800ms;
-}
-
-#menu-list{
-    border-bottom: 1px solid white;
-} */
-
-
 
 /* =============================================== */
 /* ||                   GOOGLE                  || */
