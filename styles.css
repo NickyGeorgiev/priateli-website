@@ -85,13 +85,13 @@ body{
 }
 #nav-bar ul li .menu-short{
     font-weight: bold;
-    animation: pulse .8s infinite ease;
+    /* animation: pulse .8s infinite ease; */
 }
 
-@keyframes pulse {
+/* @keyframes pulse {
     from{color: var(--text-color);}
     to{color: var(--my-color);}
-}
+} */
 .navbar-nav{
     display: flex;
     flex-direction: column;
