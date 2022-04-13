@@ -10,37 +10,23 @@ if (document.readyState == 'loading') {
 function ready() {
     var currentdate = new Date();
     var time = Number(currentdate.getHours())
-    var status1 = document.getElementById('status1')
-    var status2 = document.getElementById('status2')
     if (time < 16 || time > 21) {   //out of working time
-        status1.style.display="none"
-        status2.style.display="block"
+        document.getElementById('status1').style.display="none"
+        document.getElementById('status2').style.display="block"
     } else{
-        status1.style.display="block"
-        status2.style.display="none"
+        document.getElementById('status1').style.display="block"
+        document.getElementById('status2').style.display="none"
     }
 
-
-    var removeCartItemButtons = document.getElementsByClassName('btn-delete')
-    for (var i = 0; i < removeCartItemButtons.length; i++) {
-        var button = removeCartItemButtons[i]
-        button.addEventListener('click', removeCartItem)
-    }
+    document.getElementsByClassName('cart-row')[0].addEventListener('click', removeCartItem)
+    document.getElementsByClassName('menu-wrapper')[0].addEventListener('click', addToCartClicked)
+    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
 
     var quantityInputs = document.getElementsByClassName('cart-quantity-input')
     for (var i = 0; i < quantityInputs.length; i++) {
         var input = quantityInputs[i]
         input.addEventListener('change', quantityChanged)
     }
-
-    var addToCartButtons = document.getElementsByClassName('buy-button')
-    for (var i = 0; i < addToCartButtons.length; i++) {
-        var button = addToCartButtons[i]
-        button.addEventListener('click', addToCartClicked)
-    }
-
-    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
-
 }
 
 // ----------------- final purchase -----------------//
@@ -100,9 +86,10 @@ function sendEmail(result) {
 // ----------------- remove cart element single func -----------------//
 
 function removeCartItem(event) {
-    var buttonClicked = event.target
-    buttonClicked.parentElement.parentElement.remove()
-    updateCartTotal()
+    if(event.target.tagName == 'BUTTON'){
+        event.target.parentElement.parentElement.remove()
+        updateCartTotal()
+    }
 }
 
 // ----------------- quantuty change single func -----------------//
@@ -118,18 +105,20 @@ function quantityChanged(event) {
 // ----------------- add to cart single func -----------------//
 
 function addToCartClicked(event) {
-    var currentdate = new Date();
-    var time = Number(currentdate.getHours())
-    if (time < 16 || time > 21) {
-        alert('Доставки се извършват от 16:00 ч. до 22:00 ч.')
-    } else {
-    var button = event.target
-    var shopItem = button.parentElement.parentElement
-    var title = shopItem.getElementsByClassName('menu-title')[0].innerText
-    var price = shopItem.getElementsByClassName('menu-price')[0].innerText
-    addItemToCart(title, price)
-    updateCartTotal()
+    if(event.target.tagName == 'I'){
+        var currentdate = new Date();
+        var time = Number(currentdate.getHours())
+        if (time < 16 || time > 21) {
+            alert('Доставки се извършват от 16:00 ч. до 22:00 ч.')
+        } else {
+            var shopItem = event.target.parentElement.parentElement
+            var title = shopItem.getElementsByClassName('menu-title')[0].innerText
+            var price = shopItem.getElementsByClassName('menu-price')[0].innerText
+            addItemToCart(title, price)
+            updateCartTotal()
+        }
     }
+    
 }
 
 // ----------------- add item to cart -----------------//
@@ -197,11 +186,11 @@ function updateCartTotal() {
     let a = document.getElementsByClassName('summary')
     let b = document.getElementsByClassName('info')
     if (tempTotal > 15) {
-        a[0].style.display='block'
-        b[0].style.display='none'
+        document.getElementsByClassName('summary')[0].style.display='block'
+        document.getElementsByClassName('info')[0].style.display='none'
     } else{
-        a[0].style.display='none'
-        b[0].style.display='block'
+        document.getElementsByClassName('summary')[0].style.display='none'
+        document.getElementsByClassName('info')[0].style.display='block'
     }
 }
 
