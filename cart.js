@@ -1,50 +1,159 @@
-
 if (document.readyState == 'loading') {
     document.addEventListener('DOMContentLoaded', ready)
 } else {
     ready()
 }
 
-// ----------------- add, remove, change quantity cart element global func -----------------//
-
 function ready() {
-    var currentdate = new Date();
-    var time = Number(currentdate.getHours())
-    if (time < 16 || time > 21) {   //out of working time
-        document.getElementById('status1').style.display="none"
-        document.getElementById('status2').style.display="block"
-    } else{
-        document.getElementById('status1').style.display="block"
-        document.getElementById('status2').style.display="none"
+    let filterElements = document.querySelector('#menu-filters ul');
+    filterElements.addEventListener('click', pickItem);
+
+    let isOnline = false;
+    let currentdate = new Date();
+    let time = Number(currentdate.getHours())
+    if (time < 10 || time > 22) {   //out of working time
+        document.getElementById('status1').style.display = "none"
+        document.getElementById('status2').style.display = "block"
+    } else {
+        isOnline = true;
+        document.getElementById('status1').style.display = "block"
+        document.getElementById('status2').style.display = "none"
+    }
+    const cartItems = document.getElementsByClassName('cart-items')[0];
+    const wrapper = document.getElementsByClassName('menu-wrapper')[0];
+    wrapper.addEventListener('click', addToCart);
+
+    function addToCart(e) {
+        if (e.target.tagName != 'I' /*&& !isOnline*/) {
+            // alert('Доставки се извършват от 16:00 ч. до 22:00 ч.');
+            return;
+        }
+        let name = e.target.parentElement.parentElement.children[0].textContent;
+        let price = e.target.parentElement.parentElement.children[2].textContent;
+
+        document.getElementById('cart').style.display = 'block'
+
+        let cartRow = document.createElement('div');
+        cartRow.classList.add('cart-row');
+
+        let cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item', 'cart-column');
+        let title = document.createElement('span');
+        title.classList.add('cart-item-title');
+        title.textContent = name;
+        cartItem.appendChild(title);
+
+        let cartPrice = document.createElement('span');
+        cartPrice.classList.add('cart-price', 'cart-column');
+        let filteredPrice = price.slice(0, length - 4);
+        cartPrice.textContent = Number(filteredPrice);
+
+        let cartQuantity = document.createElement('div');
+        cartQuantity.classList.add('cart-quantity', 'cart-column');
+        let inputQty = document.createElement('input');
+        inputQty.type = "number";
+        inputQty.classList.add('cart-quantity-input');
+        inputQty.value = 1;
+        let deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('btn-delete', 'cart-quantity-button');
+        deleteBtn.textContent = 'X';
+
+        cartQuantity.appendChild(inputQty);
+        cartQuantity.appendChild(deleteBtn);
+
+        cartRow.appendChild(cartItem);
+        cartRow.appendChild(cartPrice);
+        cartRow.appendChild(cartQuantity);
+        cartItems.appendChild(cartRow);
+
+        deleteBtn.addEventListener('click', () => {
+            cartRow.remove();
+            updateCartTotal(cartItems);
+        })
+
+        inputQty.addEventListener('change', quantityChanged.bind(null, inputQty));
+        updateCartTotal(cartItems);
     }
 
-    document.getElementsByClassName('cart-row')[0].addEventListener('click', removeCartItem)
-    document.getElementsByClassName('menu-wrapper')[0].addEventListener('click', addToCartClicked)
-    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
-
-    var quantityInputs = document.getElementsByClassName('cart-quantity-input')
-    for (var i = 0; i < quantityInputs.length; i++) {
-        var input = quantityInputs[i]
-        input.addEventListener('change', quantityChanged)
+    function quantityChanged(quantity) {
+        if (isNaN(quantity.value) || quantity.value <= 0) {
+            quantity.value = 1
+        }
+        updateCartTotal(cartItems);
     }
+
+    function updateCartTotal(cartItems) {
+        let qtyForIndex = 0;
+        total = 0
+        const totalElement = document.getElementsByClassName('cart-total-price')[0];
+        for (const el of cartItems.children) {
+            let qty = Number(el.children[2].children[0].value);
+            let price = Number(el.children[1].textContent);
+            qtyForIndex += qty
+            total += qty * price
+        }
+
+        document.getElementsByClassName('index')[0].textContent = qtyForIndex;
+        let cartBtn = document.getElementsByClassName('cart-button')[0];
+        setTimeout(() => {
+            cartBtn.classList.add('shake');
+            setTimeout(() => {
+                cartBtn.classList.remove('shake');
+            }, 500)
+        }, 100)
+
+        totalElement.textContent = (total + 1.99).toFixed(2) + ' лв.';
+        if (cartItems.children.length == 0) {
+            document.getElementById('cart').style.display = 'none';
+        }
+
+        if ((total) > 15) {
+            document.getElementsByClassName('summary')[0].style.display = 'block';
+            document.getElementsByClassName('info')[0].style.display = 'none';
+        } else {
+            document.getElementsByClassName('summary')[0].style.display = 'none';
+            document.getElementsByClassName('info')[0].style.display = 'block';
+        }
+    }
+
+    function pickItem(e) {
+        if(e.target.tagName == 'UL'){
+            return;
+        }
+        let section = e.target.parentElement;
+        Array.from(filterElements.children).forEach(x => x.classList.remove('picked'))
+        section.classList.toggle('picked');
+        let value = section.getAttribute('data-filter');
+        Array.from(document.getElementsByClassName('menu-restaurant')).forEach(x => {
+            if(x.classList.contains(value)){
+                x.style.display = 'block'
+            } else{
+                x.style.display = 'none'
+            }
+        })
+    }
+
+
 }
 
-// ----------------- final purchase -----------------//
+
+// // ----------------- final purchase -----------------//
 
 function purchaseClicked() {
 
     if (confirm("Потвърдете, че желаете да направите поръчката")) {
-        var result = ''
+        let result = []
         let total =0;
         let n = document.getElementsByClassName('cart-items')[0].children
         for (let i = 0; i < n.length; i++) {
             let name = n[i].children[0].textContent.trim();
             let quantity = n[i].children[2].children[0].value;
             let price = n[i].children[1].textContent.substring(0,4);
-            result+=`${quantity} x ${name} - ${price} ##### `
+            result.push(`${quantity} x ${name} - ${price} `)
             total += Number(quantity)*Number(price);
         }
-        result+=` ТОТАЛ: ${(total + 1.99).toFixed(2)} лв. ##### `
+            result.join('\n');
+        result.push(`ТОТАЛ: ${(total + 1.99).toFixed(2)} лв.`)
         sendEmail(result);
     } else {
         txt = "Вие отказахте поръчката си!";
@@ -52,20 +161,24 @@ function purchaseClicked() {
     updateCartTotal()
 }
 
-// ----------------- email send -----------------//
+// // ----------------- email send -----------------//
 
 function sendEmail(result) {
-    let clientFirstName = document.getElementById('first').value;
-    let clientLastName = document.getElementById('last').value;
-    let clientTel = document.getElementById('tel').value;
-    let adress = document.getElementById('address').value;
-    let adressNumber = document.getElementById('adress-number').value;
-    let blok = document.getElementById('blok').value;
-    let vhod = document.getElementById('vhod').value;
-    let dopalnitelno = document.getElementById('dopalnitelno').value;
+    let input = {
+        clientFirstName : document.getElementById('first'),
+        clientLastName : document.getElementById('last'),
+        clientTel : document.getElementById('tel'),
+        adress : document.getElementById('address'),
+        adressNumber : document.getElementById('adress-number'),
+        blok : document.getElementById('blok'),
+        vhod : document.getElementById('vhod'),
+        dopalnitelno : document.getElementById('dopalnitelno')
+    }
+
     let forSend = `${result}
-    Име: ${clientFirstName} ${clientLastName}, Тел.: ${clientTel}, 
-    Ул.: ${adress}, №: ${adressNumber}, бл.: ${blok}, вх.: ${vhod} ##### АЛЕРГЕНИ: ${dopalnitelno} #####`
+    Име: ${input.clientFirstName.value} ${input.clientLastName.value}, Тел.: ${input.clientTel.value},
+    Ул.: ${input.adress.value}, №: ${input.adressNumber.value}, бл.: ${input.blok.value}, вх.: ${input.vhod.value} ##### АЛЕРГЕНИ: ${input.dopalnitelno.value} #####`
+
     Email.send({
       Host: "smtp.gmail.com",
       Username: "n.georrgiev@gmail.com",
@@ -83,118 +196,7 @@ function sendEmail(result) {
 }
 
 
-// ----------------- remove cart element single func -----------------//
-
-function removeCartItem(event) {
-    if(event.target.tagName == 'BUTTON'){
-        event.target.parentElement.parentElement.remove()
-        updateCartTotal()
-    }
-}
-
-// ----------------- quantuty change single func -----------------//
-
-function quantityChanged(event) {
-    var input = event.target
-    if (isNaN(input.value) || input.value <= 0) {
-        input.value = 1
-    }
-    updateCartTotal()
-}
-
-// ----------------- add to cart single func -----------------//
-
-function addToCartClicked(event) {
-    if(event.target.tagName == 'I'){
-        var currentdate = new Date();
-        var time = Number(currentdate.getHours())
-        if (time < 16 || time > 21) {
-            alert('Доставки се извършват от 16:00 ч. до 22:00 ч.')
-        } else {
-            var shopItem = event.target.parentElement.parentElement
-            var title = shopItem.getElementsByClassName('menu-title')[0].innerText
-            var price = shopItem.getElementsByClassName('menu-price')[0].innerText
-            addItemToCart(title, price)
-            updateCartTotal()
-        }
-    }
-    
-}
-
-// ----------------- add item to cart -----------------//
-
-function addItemToCart(title, price) {
-    let section = document.getElementById('cart')
-    let check = document.getElementsByClassName('cart-row').length
-    if(check >0){
-        section.style.display='block'
-    }
-    var cartRow = document.createElement('div')
-    cartRow.classList.add('cart-row')
-    var cartItems = document.getElementsByClassName('cart-items')[0]
-    var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
-    qty = 1;
-    for (var i = 0; i < cartItemNames.length; i++) {
-        if (cartItemNames[i].textContent == title) {
-            let inc = document.getElementsByClassName('cart-quantity-input')
-            inc[i].value = Number(inc[i].value) + 1;
-            return;
-        }
-    }
-    var cartRowContents = `
-    <div class="cart-item cart-column">
-    <span class="cart-item-title">${title}</span>
-    </div>
-    <span class="cart-price cart-column">${price}</span>
-    <div class="cart-quantity cart-column">
-    <input class="cart-quantity-input" type="number" value='1'>
-    <button class="btn-delete cart-quantity-button" type="button">X</button>
-    </div>`
-
-    cartRow.innerHTML = cartRowContents
-    cartItems.appendChild(cartRow)[0]
-    cartRow.getElementsByClassName('btn-delete')[0].addEventListener('click', removeCartItem)
-    cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
-}
-
-// ----------------- update cart -----------------//
-
-function updateCartTotal() {
-    var cartItemContainer = document.getElementsByClassName('cart-items')[0]
-    var cartRows = cartItemContainer.getElementsByClassName('cart-row')
-    var dostavka = Number(document.getElementById('dostavka-price').textContent);
-    var total = 0
-    var totQty = 0;
-    var tempTotal = 0;
-    for (var i = 0; i < cartRows.length; i++) {
-        var cartRow = cartRows[i]
-        var priceElement = cartRow.getElementsByClassName('cart-price')[0]
-        var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
-        var price = parseFloat(priceElement.innerText.replace('$', ''))
-        var quantity = quantityElement.value
-        totQty += Number(quantity)
-        total = total + (price * quantity);
-        tempTotal = total;
-    }
-    if(totQty == 0){
-        let cart = document.getElementById('cart')
-        cart.style.display='none'
-    }
-    total = ((Math.round(total * 100) / 100) + dostavka).toFixed(2);
-    document.getElementsByClassName('cart-total-price')[0].innerText = total + ' лв.'
-    document.getElementsByClassName('index')[0].innerText = totQty
-    let a = document.getElementsByClassName('summary')
-    let b = document.getElementsByClassName('info')
-    if (tempTotal > 15) {
-        document.getElementsByClassName('summary')[0].style.display='block'
-        document.getElementsByClassName('info')[0].style.display='none'
-    } else{
-        document.getElementsByClassName('summary')[0].style.display='none'
-        document.getElementsByClassName('info')[0].style.display='block'
-    }
-}
-
-// ----------------- send data jquery -----------------//
+// // ----------------- send data jquery -----------------//
 
 $(document).ready(function () {
     $('.load').hide()
@@ -212,47 +214,3 @@ $(document).ready(function () {
 
     })
 })
-
-// ----------------- cart animation jquery -----------------//
-
-$(document).ready(function () {
-    $('.buy-button').on('click', function () {
-
-        var button = $(this);
-        var cart = $('.cart-button');
-        var cartTotal = cart.attr('data-totalitems');
-        var newCartTotal = parseInt(cartTotal) + 1;
-
-        button.addClass('sendtocart');
-        setTimeout(function () {
-            button.removeClass('sendtocart');
-            cart.addClass('shake').attr('data-totalitems', newCartTotal);
-            setTimeout(function () {
-
-                cart.removeClass('shake');
-            }, 500)
-        }, 100)
-    })
-})
-
-// ----------------- wrapper menu jquery -----------------//
-
-$(document).ready(function () {
-    $('.filter').click(function () {
-        $('.filter').removeClass('picked')
-        if(!$(this).hasClass('picked')){
-            $(this).addClass('picked')
-        }
-        let value = $(this).attr('data-filter');
-        if (value == 'menu-restaurant') {
-            $('.menu-restaurant').show('1000')
-        }
-        else {
-            $('.menu-restaurant').not('.' + value).hide('1000')
-            $('.menu-restaurant').filter('.' + value).show('1000')
-        }
-    })
-})
-
-
-//  ----------------------- slider --------------------------//

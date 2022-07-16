@@ -602,6 +602,7 @@ details[open] summary ~ * {
 }
 
 .menu-restaurant{
+    display: none;
     position: relative;
     width: 50%;
     text-align: center;
